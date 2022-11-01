@@ -1,13 +1,14 @@
+import 'package:feature_toggle/app/commons/extension/context_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 import 'toggle_feature_controller.dart';
 
 class ToggleFeatureWidget extends StatelessWidget {
   final String toggleFeatureId;
   final Widget child;
-  bool get visible {
-    final controller = Modular.get<ToggleFeatureController>();
+  bool visible(BuildContext context) {
+    final controller = context.getDep<ToggleFeatureController>();
+
     return controller.enabled(toggleFeatureId);
   }
 
@@ -20,7 +21,7 @@ class ToggleFeatureWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Visibility(
-      visible: visible,
+      visible: visible(context),
       child: child,
     );
   }
